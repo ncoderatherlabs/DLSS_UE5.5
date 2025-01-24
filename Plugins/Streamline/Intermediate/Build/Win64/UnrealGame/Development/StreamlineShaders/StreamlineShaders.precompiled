@@ -1,0 +1,7 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineShaders\\StreamlineShaders.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineShaders\\UIHintExtractionPass.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineShaders\\VelocityCombinePass.cpp.obj"
+	]
+}

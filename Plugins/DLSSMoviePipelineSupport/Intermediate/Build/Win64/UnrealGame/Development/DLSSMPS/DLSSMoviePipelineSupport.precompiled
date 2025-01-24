@@ -1,0 +1,7 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Development\\DLSSMPS\\Module.DLSSMPS.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\DLSSMPS\\DLSSMoviePipelineSupportModule.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\DLSSMPS\\MoviePipelineDLSSSetting.cpp.obj"
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineCore\\StreamlineCore.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineCore\\StreamlineDeepDVC.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineCore\\StreamlineDLSSG.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineCore\\StreamlineReflex.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineCore\\StreamlineViewExtension.cpp.obj"
+	]
+}

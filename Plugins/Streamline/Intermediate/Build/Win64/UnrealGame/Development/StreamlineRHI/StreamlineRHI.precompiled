@@ -1,0 +1,8 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineRHI\\Module.StreamlineRHI.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineRHI\\StreamlineAPI.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineRHI\\StreamlineRHI.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Development\\StreamlineRHI\\StreamlineSecureLoad.cpp.obj"
+	]
+}

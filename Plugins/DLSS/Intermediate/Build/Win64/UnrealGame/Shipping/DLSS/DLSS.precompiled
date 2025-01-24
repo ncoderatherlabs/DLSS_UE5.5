@@ -1,0 +1,9 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSS\\Module.DLSS.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSS\\DLSS.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSS\\DLSSDenoiser.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSS\\DLSSUpscaler.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSS\\DLSSUpscalerHistory.cpp.obj"
+	]
+}

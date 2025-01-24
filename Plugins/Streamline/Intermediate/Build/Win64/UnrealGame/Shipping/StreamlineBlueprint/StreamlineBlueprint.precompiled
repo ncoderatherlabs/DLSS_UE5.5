@@ -1,0 +1,8 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\StreamlineBlueprint\\Module.StreamlineBlueprint.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\StreamlineBlueprint\\StreamlineLibrary.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\StreamlineBlueprint\\StreamlineLibraryDLSSG.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\StreamlineBlueprint\\StreamlineLibraryReflex.cpp.obj"
+	]
+}

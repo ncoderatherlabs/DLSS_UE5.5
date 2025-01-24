@@ -1,0 +1,6 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\NISCore\\NISCore.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\NISCore\\NISUpscaler.cpp.obj"
+	]
+}

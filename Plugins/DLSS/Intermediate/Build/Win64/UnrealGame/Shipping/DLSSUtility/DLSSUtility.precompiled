@@ -1,0 +1,7 @@
+{
+	"OutputFiles": [
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSSUtility\\DLSSUtility.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSSUtility\\GBufferResolvePass.cpp.obj",
+		"..\\..\\..\\x64\\UnrealGame\\Shipping\\DLSSUtility\\VelocityCombinePass.cpp.obj"
+	]
+}
