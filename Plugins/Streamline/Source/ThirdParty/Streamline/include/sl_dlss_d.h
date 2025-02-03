@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022-2023 NVIDIA CORPORATION. All rights reserved
+* Copyright (c) 2023 NVIDIA CORPORATION. All rights reserved
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,31 @@
 
 #pragma once
 
+#include "sl_dlss.h"
+
 namespace sl
 {
 
-enum class DLSSMode : uint32_t
-{
-    eOff,
-    eMaxPerformance,
-    eBalanced,
-    eMaxQuality,
-    eUltraPerformance,
-    eUltraQuality,
-    eDLAA,
-    eCount,
-};
-
-enum class DLSSPreset : uint32_t
+enum class DLSSDPreset : uint32_t
 {
     //! Default behavior, may or may not change after an OTA
     eDefault,
-    //! Fixed DL models
     ePresetA,
     ePresetB,
     ePresetC,
     ePresetD,
     ePresetE,
-    ePresetF,
-    ePresetG,   // reverts to default, not recommended to use
-    ePresetH,   // reverts to default, not recommended to use
-    ePresetI,   // reverts to default, not recommended to use
-    ePresetJ,
+    ePresetG,
 };
 
-// {6AC826E4-4C61-4101-A92D-638D421057B8}
-SL_STRUCT_BEGIN(DLSSOptions, StructType({ 0x6ac826e4, 0x4c61, 0x4101, { 0xa9, 0x2d, 0x63, 0x8d, 0x42, 0x10, 0x57, 0xb8 } }), kStructVersion3)
+enum class DLSSDNormalRoughnessMode : uint32_t
+{
+    eUnpacked,  // App needs to provide Normal resource and Roughness resource separately.
+    ePacked,    // App needs to write Roughness to w channel of Normal resource.
+};
+
+// {0AD87504-774E-4BF3-9633-A44D1F7F9CB8}
+SL_STRUCT_BEGIN(DLSSDOptions, StructType({ 0x0ad87504, 0x774e, 0x4bf3, { 0x96, 0x33, 0xa4, 0x4d, 0x1f, 0x7f, 0x9c, 0xb8 } }), kStructVersion3)
     //! Specifies which mode should be used
     DLSSMode mode = DLSSMode::eOff;
     //! Specifies output (final) target width
@@ -74,29 +65,33 @@ SL_STRUCT_BEGIN(DLSSOptions, StructType({ 0x6ac826e4, 0x4c61, 0x4101, { 0xa9, 0x
     Boolean indicatorInvertAxisX = Boolean::eFalse;
     //! Specifies if indicator on screen should invert axis
     Boolean indicatorInvertAxisY = Boolean::eFalse;
-    //! Presets
-    DLSSPreset dlaaPreset = DLSSPreset::eDefault;
-    DLSSPreset qualityPreset = DLSSPreset::eDefault;
-    DLSSPreset balancedPreset = DLSSPreset::eDefault;
-    DLSSPreset performancePreset = DLSSPreset::eDefault;
-    DLSSPreset ultraPerformancePreset = DLSSPreset::eDefault;
-    DLSSPreset ultraQualityPreset = DLSSPreset::eDefault;
-
-    //! Specifies if the setting for AutoExposure is used
-    Boolean useAutoExposure = Boolean::eFalse;
-
+    //! Specifies which mode should be used for roughness resource
+    DLSSDNormalRoughnessMode normalRoughnessMode = DLSSDNormalRoughnessMode::eUnpacked;
+    //! Specifies matrix transformation from the world space to the camera view space.
+    float4x4 worldToCameraView;
+    //! Specifies matrix transformation from the camera view space to the world space.
+    //! cameraViewToWorld = worldToCameraView.inverse()
+    float4x4 cameraViewToWorld;
     //! Whether or not the alpha channel should be upscaled (if false, only RGB is upscaled)
     //! Enabling alpha upscaling may impact performance
     Boolean alphaUpscalingEnabled = Boolean::eFalse;
 
+    //! Presets
+    DLSSDPreset dlaaPreset = DLSSDPreset::eDefault;
+    DLSSDPreset qualityPreset = DLSSDPreset::eDefault;
+    DLSSDPreset balancedPreset = DLSSDPreset::eDefault;
+    DLSSDPreset performancePreset = DLSSDPreset::eDefault;
+    DLSSDPreset ultraPerformancePreset = DLSSDPreset::eDefault;
+    DLSSDPreset ultraQualityPreset = DLSSDPreset::eDefault;
+
     //! IMPORTANT: New members go here or if optional can be chained in a new struct, see sl_struct.h for details
 SL_STRUCT_END()
 
-//! Returned by DLSS plugin
+//! Returned by DLSSD plugin
 //! 
-//! {EF1D0957-FD58-4DF7-B504-8B69D8AA6B76}
-SL_STRUCT_BEGIN(DLSSOptimalSettings, StructType({ 0xef1d0957, 0xfd58, 0x4df7, { 0xb5, 0x4, 0x8b, 0x69, 0xd8, 0xaa, 0x6b, 0x76 } }), kStructVersion1)
-    //! Specifies render area width
+//! {FBD0C637-A28F-41F2-BC91-B421FAEE8E1E}
+SL_STRUCT_BEGIN(DLSSDOptimalSettings, StructType({ 0xfbd0c637, 0xa28f, 0x41f2, { 0xbc, 0x91, 0xb4, 0x21, 0xfa, 0xee, 0x8e, 0x1e } }), kStructVersion1)
+//! Specifies render area width
     uint32_t optimalRenderWidth{};
     //! Specifies render area height
     uint32_t optimalRenderHeight{};
@@ -114,67 +109,67 @@ SL_STRUCT_BEGIN(DLSSOptimalSettings, StructType({ 0xef1d0957, 0xfd58, 0x4df7, { 
     //! IMPORTANT: New members go here or if optional can be chained in a new struct, see sl_struct.h for details
 SL_STRUCT_END()
 
-//! Returned by DLSS plugin
+//! Returned by DLSSD plugin
 //! 
-//! {9366B056-8C01-463C-BB91-E68782636CE9}
-SL_STRUCT_BEGIN(DLSSState, StructType({ 0x9366b056, 0x8c01, 0x463c, { 0xbb, 0x91, 0xe6, 0x87, 0x82, 0x63, 0x6c, 0xe9 } }), kStructVersion1)
-    //! Specified the amount of memory expected to be used
-    uint64_t estimatedVRAMUsageInBytes{};
+//! {71873C14-F8CA-4767-9EAF-3B4393EA98FA}
+SL_STRUCT_BEGIN(DLSSDState, StructType({ 0x71873c14, 0xf8ca, 0x4767, { 0x9e, 0xaf, 0x3b, 0x43, 0x93, 0xea, 0x98, 0xfa } }), kStructVersion1)
+//! Specified the amount of memory expected to be used
+    uint64_t estimatedVRAMUsageInBytes {};
 
     //! IMPORTANT: New members go here or if optional can be chained in a new struct, see sl_struct.h for details
 SL_STRUCT_END()
 
 }
 
-//! Provides optimal DLSS settings
+//! Provides optimal DLSSD settings
 //!
-//! Call this method to obtain optimal render target size and other DLSS related settings.
+//! Call this method to obtain optimal render target size and other DLSSD related settings.
 //!
-//! @param options Specifies DLSS options to use
+//! @param options Specifies DLSSD options to use
 //! @param settings Reference to a structure where settings are returned
 //! @return sl::ResultCode::eOk if successful, error code otherwise (see sl_result.h for details)
 //!
 //! This method is NOT thread safe.
-using PFun_slDLSSGetOptimalSettings = sl::Result(const sl::DLSSOptions & options, sl::DLSSOptimalSettings & settings);
+using PFun_slDLSSDGetOptimalSettings = sl::Result(const sl::DLSSDOptions & options, sl::DLSSDOptimalSettings & settings);
 
-//! Provides DLSS state for the given viewport
+//! Provides DLSSD state for the given viewport
 //!
-//! Call this method to obtain optimal render target size and other DLSS related settings.
+//! Call this method to obtain optimal render target size and other DLSSD related settings.
 //!
 //! @param viewport Specified viewport we are working with
 //! @param state Reference to a structure where state is to be returned
 //! @return sl::ResultCode::eOk if successful, error code otherwise (see sl_result.h for details)
 //!
 //! This method is NOT thread safe.
-using PFun_slDLSSGetState = sl::Result(const sl::ViewportHandle & viewport, sl::DLSSState & state);
+using PFun_slDLSSDGetState = sl::Result(const sl::ViewportHandle & viewport, sl::DLSSDState & state);
 
-//! Sets DLSS options
+//! Sets DLSSD options
 //!
-//! Call this method to turn DLSS on/off, change mode etc.
+//! Call this method to turn DLSSD on/off, change mode etc.
 //!
 //! @param viewport Specified viewport we are working with
-//! @param options Specifies DLSS options to use
+//! @param options Specifies DLSSD options to use
 //! @return sl::ResultCode::eOk if successful, error code otherwise (see sl_result.h for details)
 //!
 //! This method is NOT thread safe.
-using PFun_slDLSSSetOptions = sl::Result(const sl::ViewportHandle& viewport, const sl::DLSSOptions& options);
+using PFun_slDLSSDSetOptions = sl::Result(const sl::ViewportHandle& viewport, const sl::DLSSDOptions& options);
 
 //! HELPERS
 //! 
-inline sl::Result slDLSSGetOptimalSettings(const sl::DLSSOptions& options, sl::DLSSOptimalSettings& settings)
+inline sl::Result slDLSSDGetOptimalSettings(const sl::DLSSDOptions& options, sl::DLSSDOptimalSettings& settings)
 {
-    SL_FEATURE_FUN_IMPORT_STATIC(sl::kFeatureDLSS, slDLSSGetOptimalSettings);
-    return s_slDLSSGetOptimalSettings(options, settings);
+    SL_FEATURE_FUN_IMPORT_STATIC(sl::kFeatureDLSS_RR, slDLSSDGetOptimalSettings);
+    return s_slDLSSDGetOptimalSettings(options, settings);
 }
 
-inline sl::Result slDLSSGetState(const sl::ViewportHandle& viewport, sl::DLSSState& state)
+inline sl::Result slDLSSDGetState(const sl::ViewportHandle& viewport, sl::DLSSDState& state)
 {
-    SL_FEATURE_FUN_IMPORT_STATIC(sl::kFeatureDLSS, slDLSSGetState);
-    return s_slDLSSGetState(viewport, state);
+    SL_FEATURE_FUN_IMPORT_STATIC(sl::kFeatureDLSS_RR, slDLSSDGetState);
+    return s_slDLSSDGetState(viewport, state);
 }
 
-inline sl::Result slDLSSSetOptions(const sl::ViewportHandle& viewport, const sl::DLSSOptions& options)
+inline sl::Result slDLSSDSetOptions(const sl::ViewportHandle& viewport, const sl::DLSSDOptions& options)
 {
-    SL_FEATURE_FUN_IMPORT_STATIC(sl::kFeatureDLSS, slDLSSSetOptions);
-    return s_slDLSSSetOptions(viewport, options);
+    SL_FEATURE_FUN_IMPORT_STATIC(sl::kFeatureDLSS_RR, slDLSSDSetOptions);
+    return s_slDLSSDSetOptions(viewport, options);
 }
