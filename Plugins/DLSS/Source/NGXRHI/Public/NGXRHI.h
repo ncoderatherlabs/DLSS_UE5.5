@@ -79,6 +79,12 @@ struct FDLSSFeatureDesc
 				case NVSDK_NGX_DLSS_Hint_Render_Preset_E:return TEXT("Preset E");
 				case NVSDK_NGX_DLSS_Hint_Render_Preset_F:return TEXT("Preset F");
 				case NVSDK_NGX_DLSS_Hint_Render_Preset_G:return TEXT("Preset G");
+				case NVSDK_NGX_DLSS_Hint_Render_Preset_J:return TEXT("Preset J");
+				case NVSDK_NGX_DLSS_Hint_Render_Preset_K:return TEXT("Preset K");
+				case NVSDK_NGX_DLSS_Hint_Render_Preset_L:return TEXT("Preset L");
+				case NVSDK_NGX_DLSS_Hint_Render_Preset_M:return TEXT("Preset M");
+				case NVSDK_NGX_DLSS_Hint_Render_Preset_N:return TEXT("Preset N");
+				case NVSDK_NGX_DLSS_Hint_Render_Preset_O:return TEXT("Preset O");
 				default:return TEXT("Invalid NVSDK_NGX_DLSS_Hint_Render_Preset");
 			}
 		};
