@@ -52,7 +52,13 @@ static TAutoConsoleVariable<int32> CVarNGXDLSSPresetSetting(
 	TEXT("  4: Force preset D\n")
 	TEXT("  5: Force preset E\n")
 	TEXT("  6: Force preset F\n")
-	TEXT("  7: Force preset G"),
+	TEXT("  7: Force preset G\n")
+	TEXT("  8: Force preset J\n")
+	TEXT("  9: Force preset K\n")
+	TEXT("  10: Force preset L\n")
+	TEXT("  11: Force preset M\n")
+	TEXT("  12: Force preset N\n")
+	TEXT("  13: Force preset O\n"),
 	ECVF_RenderThreadSafe);
 
 
@@ -184,7 +190,7 @@ bool FDLSSPassParameters::Validate() const
 
 static EDLSSPreset GetDLSSPresetFromCVarValue(int32 InCVarValue)
 {
-	if (InCVarValue >= 0 && InCVarValue <= static_cast<int32>(EDLSSPreset::F))
+	if (InCVarValue >= 0 && InCVarValue <= static_cast<int32>(EDLSSPreset::MAX))
 	{
 		return static_cast<EDLSSPreset>(InCVarValue);
 	}
@@ -221,6 +227,24 @@ static NVSDK_NGX_DLSS_Hint_Render_Preset ToNGXDLSSPreset(EDLSSPreset DLSSPreset)
 		
 		case EDLSSPreset::G:
 			return NVSDK_NGX_DLSS_Hint_Render_Preset_G;
+		
+		case EDLSSPreset::J:
+			return NVSDK_NGX_DLSS_Hint_Render_Preset_J;
+		
+		case EDLSSPreset::K:
+			return NVSDK_NGX_DLSS_Hint_Render_Preset_K;
+			
+		case EDLSSPreset::L:
+			return NVSDK_NGX_DLSS_Hint_Render_Preset_L;
+			
+		case EDLSSPreset::M:
+			return NVSDK_NGX_DLSS_Hint_Render_Preset_M;
+			
+		case EDLSSPreset::N:
+			return NVSDK_NGX_DLSS_Hint_Render_Preset_N;
+		
+		case EDLSSPreset::O:
+			return NVSDK_NGX_DLSS_Hint_Render_Preset_O;
 	}
 }
 

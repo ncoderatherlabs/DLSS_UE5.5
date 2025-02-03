@@ -36,6 +36,13 @@ enum class EDLSSPreset : uint8
 	E=5 UMETA(ToolTip = "force preset E"),
 	F=6 UMETA(ToolTip = "force preset F"),
 	G=7 UMETA(ToolTip = "force preset G"),
+	J=8 UMETA(ToolTip = "force preset J"),
+	K=9 UMETA(ToolTip = "force preset K"),
+	L=10 UMETA(ToolTip = "force preset L"),
+	M=11 UMETA(ToolTip = "force preset M"),
+	N=12 UMETA(ToolTip = "force preset N"),
+	O=13 UMETA(ToolTip = "force preset O"),
+	MAX=O UMETA(ToolTip = "force preset MAX"),
 };
 
 UCLASS(Config = Engine, ProjectUserConfig)
