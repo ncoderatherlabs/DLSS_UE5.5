@@ -152,8 +152,20 @@ typedef struct NVSDK_NGX_D3D11_DLSSD_Eval_Params
 
     ID3D11Resource*                     pInReflectedAlbedo;
     ID3D11Resource*                     pInColorBeforeParticles;
+    ID3D11Resource*                     pInColorAfterParticles;
     ID3D11Resource*                     pInColorBeforeTransparency;
+    ID3D11Resource*                     pInColorAfterTransparency;
     ID3D11Resource*                     pInColorBeforeFog;
+    ID3D11Resource*                     pInColorAfterFog;
+    ID3D11Resource*                     pInScreenSpaceSubsurfaceScatteringGuide;
+    ID3D11Resource*                     pInColorBeforeScreenSpaceSubsurfaceScattering;
+    ID3D11Resource*                     pInColorAfterScreenSpaceSubsurfaceScattering;
+    ID3D11Resource*                     pInScreenSpaceRefractionGuide;
+    ID3D11Resource*                     pInColorBeforeScreenSpaceRefraction;
+    ID3D11Resource*                     pInColorAfterScreenSpaceRefraction;
+    ID3D11Resource*                     pInDepthOfFieldGuide;
+    ID3D11Resource*                     pInColorBeforeDepthOfField;
+    ID3D11Resource*                     pInColorAfterDepthOfField;
     ID3D11Resource*                     pInDiffuseHitDistance;
     ID3D11Resource*                     pInSpecularHitDistance;
     ID3D11Resource*                     pInDiffuseRayDirection;
@@ -162,14 +174,26 @@ typedef struct NVSDK_NGX_D3D11_DLSSD_Eval_Params
     ID3D11Resource*                     pInSpecularRayDirectionHitDistance;
     NVSDK_NGX_Coordinates               InReflectedAlbedoSubrectBase;
     NVSDK_NGX_Coordinates               InColorBeforeParticlesSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterParticlesSubrectBase;
     NVSDK_NGX_Coordinates               InColorBeforeTransparencySubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterTransparencySubrectBase;
     NVSDK_NGX_Coordinates               InColorBeforeFogSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterFogSubrectBase;
+    NVSDK_NGX_Coordinates               InScreenSpaceSubsurfaceScatteringGuideSubrectBase;
+    NVSDK_NGX_Coordinates               InScreenSpaceRefractionGuideSubrectBase;
+    NVSDK_NGX_Coordinates               InDepthOfFieldGuideSubrectBase;
     NVSDK_NGX_Coordinates               InDiffuseHitDistanceSubrectBase;
     NVSDK_NGX_Coordinates               InSpecularHitDistanceSubrectBase;
     NVSDK_NGX_Coordinates               InDiffuseRayDirectionSubrectBase;
     NVSDK_NGX_Coordinates               InSpecularRayDirectionSubrectBase;
     NVSDK_NGX_Coordinates               InDiffuseRayDirectionHitDistanceSubrectBase;
     NVSDK_NGX_Coordinates               InSpecularRayDirectionHitDistanceSubrectBase;
+    NVSDK_NGX_Coordinates               InColorBeforeScreenSpaceSubsurfaceScatteringSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterScreenSpaceSubsurfaceScatteringSubrectBase;
+    NVSDK_NGX_Coordinates               InColorBeforeScreenSpaceRefractionSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterScreenSpaceRefractionSubrectBase;
+    NVSDK_NGX_Coordinates               InColorBeforeDepthOfFieldSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterDepthOfFieldSubtectBase;
     float*                              pInWorldToViewMatrix;
     float*                              pInViewToClipMatrix;
 
@@ -192,6 +216,10 @@ typedef struct NVSDK_NGX_D3D11_DLSSD_Eval_Params
     NVSDK_NGX_Coordinates               InTransparencyLayerSubrectBase;
     ID3D11Resource*                     pInTransparencyLayerOpacity; /* optional input res particle opacity layer */
     NVSDK_NGX_Coordinates               InTransparencyLayerOpacitySubrectBase;
+    ID3D11Resource*                     pInTransparencyLayerMvecs; /* optional input res transparency layer mvecs */
+    NVSDK_NGX_Coordinates               InTransparencyLayerMvecsSubrectBase;
+    ID3D11Resource*                     pInDisocclusionMask; /* optional input res disocclusion mask */
+    NVSDK_NGX_Coordinates               InDisocclusionMaskSubrectBase;
 } NVSDK_NGX_D3D11_DLSSD_Eval_Params;
 
 static inline NVSDK_NGX_Result NGX_D3D11_CREATE_DLSSD_EXT(
@@ -289,8 +317,20 @@ static inline NVSDK_NGX_Result NGX_D3D11_EVALUATE_DLSSD_EXT(
 
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ReflectedAlbedo, pInDlssDEvalParams->pInReflectedAlbedo);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeParticles, pInDlssDEvalParams->pInColorBeforeParticles);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterParticles, pInDlssDEvalParams->pInColorAfterParticles);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeTransparency, pInDlssDEvalParams->pInColorBeforeTransparency);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterTransparency, pInDlssDEvalParams->pInColorAfterTransparency);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeFog, pInDlssDEvalParams->pInColorBeforeFog);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterFog, pInDlssDEvalParams->pInColorAfterFog);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceSubsurfaceScatteringGuide, pInDlssDEvalParams->pInScreenSpaceSubsurfaceScatteringGuide);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceSubsurfaceScattering, pInDlssDEvalParams->pInColorBeforeScreenSpaceSubsurfaceScattering);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceSubsurfaceScattering, pInDlssDEvalParams->pInColorAfterScreenSpaceSubsurfaceScattering);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceRefractionGuide, pInDlssDEvalParams->pInScreenSpaceRefractionGuide);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceRefraction, pInDlssDEvalParams->pInColorBeforeScreenSpaceRefraction);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceRefraction, pInDlssDEvalParams->pInColorAfterScreenSpaceRefraction);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_DepthOfFieldGuide, pInDlssDEvalParams->pInDepthOfFieldGuide);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeDepthOfField, pInDlssDEvalParams->pInColorBeforeDepthOfField);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterDepthOfField, pInDlssDEvalParams->pInColorAfterDepthOfField);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseHitDistance, pInDlssDEvalParams->pInDiffuseHitDistance);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_SpecularHitDistance, pInDlssDEvalParams->pInSpecularHitDistance);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseRayDirection, pInDlssDEvalParams->pInDiffuseRayDirection);
@@ -299,12 +339,36 @@ static inline NVSDK_NGX_Result NGX_D3D11_EVALUATE_DLSSD_EXT(
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_SpecularRayDirectionHitDistance, pInDlssDEvalParams->pInSpecularRayDirectionHitDistance);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ReflectedAlbedo_Subrect_Base_X, pInDlssDEvalParams->InReflectedAlbedoSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ReflectedAlbedo_Subrect_Base_Y, pInDlssDEvalParams->InReflectedAlbedoSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterParticles_Subrect_Base_X, pInDlssDEvalParams->InColorAfterParticlesSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterParticles_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterParticlesSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeParticles_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeParticlesSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeParticles_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeParticlesSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeTransparency_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeTransparencySubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeTransparency_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeTransparencySubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterTransparency_Subrect_Base_X, pInDlssDEvalParams->InColorAfterTransparencySubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterTransparency_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterTransparencySubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeFog_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeFogSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeFog_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeFogSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterFog_Subrect_Base_X, pInDlssDEvalParams->InColorAfterFogSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterFog_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterFogSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceSubsurfaceScatteringGuide_Subrect_Base_X, pInDlssDEvalParams->InScreenSpaceSubsurfaceScatteringGuideSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceSubsurfaceScatteringGuide_Subrect_Base_Y, pInDlssDEvalParams->InScreenSpaceSubsurfaceScatteringGuideSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceSubsurfaceScattering_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeScreenSpaceSubsurfaceScatteringSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceSubsurfaceScattering_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeScreenSpaceSubsurfaceScatteringSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceSubsurfaceScattering_Subrect_Base_X, pInDlssDEvalParams->InColorAfterScreenSpaceSubsurfaceScatteringSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceSubsurfaceScattering_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterScreenSpaceSubsurfaceScatteringSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceRefractionGuide_Subrect_Base_X, pInDlssDEvalParams->InScreenSpaceRefractionGuideSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceRefractionGuide_Subrect_Base_Y, pInDlssDEvalParams->InScreenSpaceRefractionGuideSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceRefraction_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeScreenSpaceRefractionSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceRefraction_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeScreenSpaceRefractionSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceRefraction_Subrect_Base_X, pInDlssDEvalParams->InColorAfterScreenSpaceRefractionSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceRefraction_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterScreenSpaceRefractionSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DepthOfFieldGuide_Subrect_Base_X, pInDlssDEvalParams->InDepthOfFieldGuideSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DepthOfFieldGuide_Subrect_Base_Y, pInDlssDEvalParams->InDepthOfFieldGuideSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeDepthOfField_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeDepthOfFieldSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeDepthOfField_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeDepthOfFieldSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterDepthOfField_Subrect_Base_X, pInDlssDEvalParams->InColorAfterDepthOfFieldSubtectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterDepthOfField_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterDepthOfFieldSubtectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseHitDistance_Subrect_Base_X, pInDlssDEvalParams->InDiffuseHitDistanceSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseHitDistance_Subrect_Base_Y, pInDlssDEvalParams->InDiffuseHitDistanceSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_SpecularHitDistance_Subrect_Base_X, pInDlssDEvalParams->InSpecularHitDistanceSubrectBase.X);
@@ -325,10 +389,16 @@ static inline NVSDK_NGX_Result NGX_D3D11_EVALUATE_DLSSD_EXT(
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_GBuffer_Roughness, pInDlssDEvalParams->pInRoughness);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayer, pInDlssDEvalParams->pInTransparencyLayer);
     NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerOpacity, pInDlssDEvalParams->pInTransparencyLayerOpacity);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerMvecs, pInDlssDEvalParams->pInTransparencyLayerMvecs);
+    NVSDK_NGX_Parameter_SetD3d11Resource(pInParams, NVSDK_NGX_Parameter_DLSS_DisocclusionMask, pInDlssDEvalParams->pInDisocclusionMask);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayer_Subrect_Base_X, pInDlssDEvalParams->InTransparencyLayerSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayer_Subrect_Base_Y, pInDlssDEvalParams->InTransparencyLayerSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerOpacity_Subrect_Base_X, pInDlssDEvalParams->InTransparencyLayerOpacitySubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerOpacity_Subrect_Base_Y, pInDlssDEvalParams->InTransparencyLayerOpacitySubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerMvecs_Subrect_Base_X, pInDlssDEvalParams->InTransparencyLayerMvecsSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerMvecs_Subrect_Base_Y, pInDlssDEvalParams->InTransparencyLayerMvecsSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_DisocclusionMask_Subrect_Base_X, pInDlssDEvalParams->InDisocclusionMaskSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_DisocclusionMask_Subrect_Base_Y, pInDlssDEvalParams->InDisocclusionMaskSubrectBase.Y);
 
 
     return NVSDK_NGX_D3D11_EvaluateFeature_C(pInCtx, pInHandle, pInParams, NULL);
@@ -368,8 +438,20 @@ typedef struct NVSDK_NGX_D3D12_DLSSD_Eval_Params
 
     ID3D12Resource*                     pInReflectedAlbedo;
     ID3D12Resource*                     pInColorBeforeParticles;
+    ID3D12Resource*                     pInColorAfterParticles;
     ID3D12Resource*                     pInColorBeforeTransparency;
+    ID3D12Resource*                     pInColorAfterTransparency;
     ID3D12Resource*                     pInColorBeforeFog;
+    ID3D12Resource*                     pInColorAfterFog;
+    ID3D12Resource*                     pInScreenSpaceSubsurfaceScatteringGuide;
+    ID3D12Resource*                     pInColorBeforeScreenSpaceSubsurfaceScattering;
+    ID3D12Resource*                     pInColorAfterScreenSpaceSubsurfaceScattering;
+    ID3D12Resource*                     pInScreenSpaceRefractionGuide;
+    ID3D12Resource*                     pInColorBeforeScreenSpaceRefraction;
+    ID3D12Resource*                     pInColorAfterScreenSpaceRefraction;
+    ID3D12Resource*                     pInDepthOfFieldGuide;
+    ID3D12Resource*                     pInColorBeforeDepthOfField;
+    ID3D12Resource*                     pInColorAfterDepthOfField;
     ID3D12Resource*                     pInDiffuseHitDistance;
     ID3D12Resource*                     pInSpecularHitDistance;
     ID3D12Resource*                     pInDiffuseRayDirection;
@@ -378,14 +460,26 @@ typedef struct NVSDK_NGX_D3D12_DLSSD_Eval_Params
     ID3D12Resource*                     pInSpecularRayDirectionHitDistance;
     NVSDK_NGX_Coordinates               InReflectedAlbedoSubrectBase;
     NVSDK_NGX_Coordinates               InColorBeforeParticlesSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterParticlesSubrectBase;
     NVSDK_NGX_Coordinates               InColorBeforeTransparencySubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterTransparencySubrectBase;
     NVSDK_NGX_Coordinates               InColorBeforeFogSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterFogSubrectBase;
+    NVSDK_NGX_Coordinates               InScreenSpaceSubsurfaceScatteringGuideSubrectBase;
+    NVSDK_NGX_Coordinates               InScreenSpaceRefractionGuideSubrectBase;
+    NVSDK_NGX_Coordinates               InDepthOfFieldGuideSubrectBase;
     NVSDK_NGX_Coordinates               InDiffuseHitDistanceSubrectBase;
     NVSDK_NGX_Coordinates               InSpecularHitDistanceSubrectBase;
     NVSDK_NGX_Coordinates               InDiffuseRayDirectionSubrectBase;
     NVSDK_NGX_Coordinates               InSpecularRayDirectionSubrectBase;
     NVSDK_NGX_Coordinates               InDiffuseRayDirectionHitDistanceSubrectBase;
     NVSDK_NGX_Coordinates               InSpecularRayDirectionHitDistanceSubrectBase;
+    NVSDK_NGX_Coordinates               InColorBeforeScreenSpaceSubsurfaceScatteringSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterScreenSpaceSubsurfaceScatteringSubrectBase;
+    NVSDK_NGX_Coordinates               InColorBeforeScreenSpaceRefractionSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterScreenSpaceRefractionSubrectBase;
+    NVSDK_NGX_Coordinates               InColorBeforeDepthOfFieldSubrectBase;
+    NVSDK_NGX_Coordinates               InColorAfterDepthOfFieldSubtectBase;
     float*                              pInWorldToViewMatrix;
     float*                              pInViewToClipMatrix;
 
@@ -408,6 +502,10 @@ typedef struct NVSDK_NGX_D3D12_DLSSD_Eval_Params
     NVSDK_NGX_Coordinates               InTransparencyLayerSubrectBase;
     ID3D12Resource*                     pInTransparencyLayerOpacity; /* optional input res particle opacity layer */
     NVSDK_NGX_Coordinates               InTransparencyLayerOpacitySubrectBase;
+    ID3D12Resource*                     pInTransparencyLayerMvecs; /* optional input res transparency layer mvecs */
+    NVSDK_NGX_Coordinates               InTransparencyLayerMvecsSubrectBase;
+    ID3D12Resource*                     pInDisocclusionMask; /* optional input res disocclusion mask */
+    NVSDK_NGX_Coordinates               InDisocclusionMaskSubrectBase;
 
 } NVSDK_NGX_D3D12_DLSSD_Eval_Params;
 
@@ -512,8 +610,20 @@ static inline NVSDK_NGX_Result NGX_D3D12_EVALUATE_DLSSD_EXT(
 
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ReflectedAlbedo, pInDlssDEvalParams->pInReflectedAlbedo);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeParticles, pInDlssDEvalParams->pInColorBeforeParticles);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterParticles, pInDlssDEvalParams->pInColorAfterParticles);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeTransparency, pInDlssDEvalParams->pInColorBeforeTransparency);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterTransparency, pInDlssDEvalParams->pInColorAfterTransparency);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeFog, pInDlssDEvalParams->pInColorBeforeFog);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterFog, pInDlssDEvalParams->pInColorAfterFog);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceSubsurfaceScatteringGuide, pInDlssDEvalParams->pInScreenSpaceSubsurfaceScatteringGuide);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceSubsurfaceScattering, pInDlssDEvalParams->pInColorBeforeScreenSpaceSubsurfaceScattering);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceSubsurfaceScattering, pInDlssDEvalParams->pInColorAfterScreenSpaceSubsurfaceScattering);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceRefractionGuide, pInDlssDEvalParams->pInScreenSpaceRefractionGuide);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceRefraction, pInDlssDEvalParams->pInColorBeforeScreenSpaceRefraction);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceRefraction, pInDlssDEvalParams->pInColorAfterScreenSpaceRefraction);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_DepthOfFieldGuide, pInDlssDEvalParams->pInDepthOfFieldGuide);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeDepthOfField, pInDlssDEvalParams->pInColorBeforeDepthOfField);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterDepthOfField, pInDlssDEvalParams->pInColorAfterDepthOfField);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseHitDistance, pInDlssDEvalParams->pInDiffuseHitDistance);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_SpecularHitDistance, pInDlssDEvalParams->pInSpecularHitDistance);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseRayDirection, pInDlssDEvalParams->pInDiffuseRayDirection);
@@ -522,12 +632,36 @@ static inline NVSDK_NGX_Result NGX_D3D12_EVALUATE_DLSSD_EXT(
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSSD_SpecularRayDirectionHitDistance, pInDlssDEvalParams->pInSpecularRayDirectionHitDistance);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ReflectedAlbedo_Subrect_Base_X, pInDlssDEvalParams->InReflectedAlbedoSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ReflectedAlbedo_Subrect_Base_Y, pInDlssDEvalParams->InReflectedAlbedoSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterParticles_Subrect_Base_X, pInDlssDEvalParams->InColorAfterParticlesSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterParticles_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterParticlesSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeParticles_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeParticlesSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeParticles_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeParticlesSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeTransparency_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeTransparencySubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeTransparency_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeTransparencySubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterTransparency_Subrect_Base_X, pInDlssDEvalParams->InColorAfterTransparencySubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterTransparency_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterTransparencySubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterFog_Subrect_Base_X, pInDlssDEvalParams->InColorAfterFogSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterFog_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterFogSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeFog_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeFogSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeFog_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeFogSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceSubsurfaceScatteringGuide_Subrect_Base_X, pInDlssDEvalParams->InScreenSpaceSubsurfaceScatteringGuideSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceSubsurfaceScatteringGuide_Subrect_Base_Y, pInDlssDEvalParams->InScreenSpaceSubsurfaceScatteringGuideSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceSubsurfaceScattering_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeScreenSpaceSubsurfaceScatteringSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceSubsurfaceScattering_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeScreenSpaceSubsurfaceScatteringSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceSubsurfaceScattering_Subrect_Base_X, pInDlssDEvalParams->InColorAfterScreenSpaceSubsurfaceScatteringSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceSubsurfaceScattering_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterScreenSpaceSubsurfaceScatteringSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceRefractionGuide_Subrect_Base_X, pInDlssDEvalParams->InScreenSpaceRefractionGuideSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ScreenSpaceRefractionGuide_Subrect_Base_Y, pInDlssDEvalParams->InScreenSpaceRefractionGuideSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceRefraction_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeScreenSpaceRefractionSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeScreenSpaceRefraction_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeScreenSpaceRefractionSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceRefraction_Subrect_Base_X, pInDlssDEvalParams->InColorAfterScreenSpaceRefractionSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterScreenSpaceRefraction_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterScreenSpaceRefractionSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DepthOfFieldGuide_Subrect_Base_X, pInDlssDEvalParams->InDepthOfFieldGuideSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DepthOfFieldGuide_Subrect_Base_Y, pInDlssDEvalParams->InDepthOfFieldGuideSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeDepthOfField_Subrect_Base_X, pInDlssDEvalParams->InColorBeforeDepthOfFieldSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorBeforeDepthOfField_Subrect_Base_Y, pInDlssDEvalParams->InColorBeforeDepthOfFieldSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterDepthOfField_Subrect_Base_X, pInDlssDEvalParams->InColorAfterDepthOfFieldSubtectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_ColorAfterDepthOfField_Subrect_Base_Y, pInDlssDEvalParams->InColorAfterDepthOfFieldSubtectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseHitDistance_Subrect_Base_X, pInDlssDEvalParams->InDiffuseHitDistanceSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_DiffuseHitDistance_Subrect_Base_Y, pInDlssDEvalParams->InDiffuseHitDistanceSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSSD_SpecularHitDistance_Subrect_Base_X, pInDlssDEvalParams->InSpecularHitDistanceSubrectBase.X);
@@ -544,10 +678,16 @@ static inline NVSDK_NGX_Result NGX_D3D12_EVALUATE_DLSSD_EXT(
     NVSDK_NGX_Parameter_SetVoidPointer(pInParams, NVSDK_NGX_Parameter_DLSS_VIEW_TO_CLIP_MATRIX, pInDlssDEvalParams->pInViewToClipMatrix);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayer, pInDlssDEvalParams->pInTransparencyLayer);
     NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerOpacity, pInDlssDEvalParams->pInTransparencyLayerOpacity);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerMvecs, pInDlssDEvalParams->pInTransparencyLayerMvecs);
+    NVSDK_NGX_Parameter_SetD3d12Resource(pInParams, NVSDK_NGX_Parameter_DLSS_DisocclusionMask, pInDlssDEvalParams->pInDisocclusionMask);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayer_Subrect_Base_X, pInDlssDEvalParams->InTransparencyLayerSubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayer_Subrect_Base_Y, pInDlssDEvalParams->InTransparencyLayerSubrectBase.Y);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerOpacity_Subrect_Base_X, pInDlssDEvalParams->InTransparencyLayerOpacitySubrectBase.X);
     NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerOpacity_Subrect_Base_Y, pInDlssDEvalParams->InTransparencyLayerOpacitySubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerMvecs_Subrect_Base_X, pInDlssDEvalParams->InTransparencyLayerMvecsSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_TransparencyLayerMvecs_Subrect_Base_Y, pInDlssDEvalParams->InTransparencyLayerMvecsSubrectBase.Y);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_DisocclusionMask_Subrect_Base_X, pInDlssDEvalParams->InDisocclusionMaskSubrectBase.X);
+    NVSDK_NGX_Parameter_SetUI(pInParams, NVSDK_NGX_Parameter_DLSS_DisocclusionMask_Subrect_Base_Y, pInDlssDEvalParams->InDisocclusionMaskSubrectBase.Y);
 
     return NVSDK_NGX_D3D12_EvaluateFeature_C(pInCmdList, pInHandle, pInParams, NULL);
 }
